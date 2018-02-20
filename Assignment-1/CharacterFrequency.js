@@ -19,7 +19,7 @@
  * NOTE: Uppercase and Lowercase letters are grouped in the same count. 
  *       For example, the word Babble would result 'B' with count 3.
  */
-let getCharacterFrequency = (str) => {
+const getCharacterFrequency = (str) => {
     // frequency object to be returned, empty now.
     let frequency = {};
     
@@ -57,7 +57,7 @@ let getCharacterFrequency = (str) => {
  * and displays each character and it's corresponding frequency.
  * Each character is surrounded by quotation marks '', and accounts for singular and plural values.
  */
-let printCharacterFrequency = (frequencyObj) => {
+const printCharacterFrequency = (frequencyObj) => {
     // iterates over each key in the passed object.
     for ( let key in frequencyObj ) {
         // if count for a property is greater than 1, uses 'times', else uses 'time'.
