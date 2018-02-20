@@ -20,7 +20,7 @@
 /*
  * This function takes a single string and returns a copy of the string with all alphabets converted to uppercase characters.
  */
-let upperCase = (str) => {
+const upperCase = (str) => {
     let result = "";
     
     // for every character of the string,
@@ -38,7 +38,7 @@ let upperCase = (str) => {
 /*
  * This function takes a single string and returns a copy of the string with all alphabets converted to lowercase characters.
  */
-let lowerCase = (str) => {
+const lowerCase = (str) => {
     let result = "";
     
     // for every character of the string,
@@ -63,9 +63,9 @@ let lowerCase = (str) => {
  * except for words that are unconditionally capitalized, such as proper nouns and "I". 
  * The unconditionallyCapitalized array contains all words that should be unconditionally capitalized.
  */
-let sentenceCase = (str, unconditionallyCapitalized) => {
+const sentenceCase = (str, unconditionallyCapitalized) => {
     // expression style function to capitalized first letter of the string passed.
-    let capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
+    const capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
 
     // convert all words of passed 'unconditionallyCapitalized' array to lowercase using above implemented function.
     // map() accepts a function, and executes that function on every element of the array.
@@ -105,10 +105,10 @@ let sentenceCase = (str, unconditionallyCapitalized) => {
 /*
  * This function takes a single string and returns a copy of the string with the first character of each word converted to uppercase.
  */
-let capitalizedCase = (str) => {
+const capitalizedCase = (str) => {
     
     // expression style function to capitalized first letter of the string passed.
-    let capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
+    const capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
     
     // convert string to lowercase and split on " " to get words.
     let words = lowerCase(str).split(" ");
@@ -124,7 +124,7 @@ let capitalizedCase = (str) => {
 /*
  * This function takes a single string and returns a copy of the string comprised of characters that alternate between lower and uppercase.
  */
-let alternatingCase = (str) => {
+const alternatingCase = (str) => {
     
     // lower = true -> indicates that first letter will be lowercased.
     let result = "", lower = true;
@@ -142,10 +142,18 @@ let alternatingCase = (str) => {
     return result;
 }
 
-let titleCase = (str, lowercaseWords) => {
+/*
+ * This function takes two arguments: 
+ *      1. Single string (str), and
+ *      2. An array of strings (lowercaseWords[]). 
+ * It returns a copy of str with the initial letter of each word capitalized.
+ * After the first word in the string, however, articles, conjunctions, and prepositions not more than five letters long are all lower cased.
+ * The lowercaseWords array contains all words that should be lowercased.
+ */
+const titleCase = (str, lowercaseWords) => {
    
     // expression style function to capitalized first letter of the string passed.
-    let capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
+    const capitalized = (word) => upperCase(word.charAt(0)) + word.slice(1);
 
     // convert all words of passed 'lowercaseWords' array to lowercase using above implemented function.
     // map() accepts a function, and executes that function on every element of the array.
@@ -185,10 +193,10 @@ let titleCase = (str, lowercaseWords) => {
 /*
  * This function takes a single string and returns a copy of the string with the first letter of each word lowercased, and all other letters in the word uppercased.
  */
-let inverseCase = (str) => {
+const inverseCase = (str) => {
    
     // expression style function to lowercase first letter and capitalize all other letters of the string passed.
-    let inverseCapitalized = (word) => lowerCase(word.charAt(0)) + word.slice(1);
+    const inverseCapitalized = (word) => lowerCase(word.charAt(0)) + word.slice(1);
    
     // convert string to uppercase and split on " " to get words.
     let words = upperCase(str).split(" ");
