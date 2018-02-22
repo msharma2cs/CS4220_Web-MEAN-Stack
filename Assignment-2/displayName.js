@@ -18,4 +18,4 @@ const person = {
 }
 
 // Display the full name of the person.
-displayName(person)  // Elon Musk
+displayName(person);

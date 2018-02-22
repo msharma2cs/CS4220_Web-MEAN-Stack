@@ -43,7 +43,8 @@ Question 2:
                 }
                 displayName(person)  
                 
-                Output: Elon Musk
+                Output: 
+                Elon Musk
 
 ----------
 Question 3:
@@ -103,3 +104,5 @@ Question 4:
                         '1': { name: 'Elon Musk', twitter: '@elonmusk', company: 'Space X' },
                         '2': { name: 'Tim Cook', twitter: '@tim_cook', company: 'Apple' }
                     }
+
+--------------------------------------------------------------------------------------------------------------                    
