@@ -1,1 +1,4 @@
 .idea*
+*.java
+*.ppm
+*.class
