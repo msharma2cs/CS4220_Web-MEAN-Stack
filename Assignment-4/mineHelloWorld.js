@@ -22,7 +22,6 @@ const helloWorlCoinMining = ( nonce, printDigestCallback) => {
         message = '',
         digest = '';
 
-    //for ( let i = nonce; i < MAX_LIMIT; i++ ) {
     while ( nonce < MAX_LIMIT ) {
         message = 'Hello, World!' + nonce;
         digest = crypto.createHash('sha256').update( message, 'utf8').digest('hex');
