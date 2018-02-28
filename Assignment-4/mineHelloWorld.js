@@ -13,7 +13,7 @@ const crypto = require('crypto')
  */
 const helloWorlCoinMining = ( nonce, printDigestCallback) => {
     // regex to match digest that has exactly 3 leading 0s.
-    const re = new RegExp('^000.+');
+    const re = new RegExp('^000[^0].+');
     // setting upper cap on loop execution.
     const MAX_LIMIT = nonce + 999999;
     // error to report if failed to mine coin with limit.
