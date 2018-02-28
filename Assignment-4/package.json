@@ -1,0 +1,30 @@
+{
+  "name": "lab2-week5",
+  "version": "1.0.0",
+  "description": "Solutions to Lab 2 - Week 5 questions.",
+  "main": "mineHelloWorld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msharma2cs/CS4220_Web-MEAN-Stack.git"
+  },
+  "keywords": [
+    "CS4220",
+    "Hello",
+    "World!",
+    "coin",
+    "mining",
+    "message",
+    "signature",
+    "validator"
+  ],
+  "author": "Mohit Sharma <msharma2@calstatela.edu>",
+  "license": "ISC",
+  "homepage": "https://github.com/msharma2cs/CS4220_Web-MEAN-Stack/blob/master/Assignment-4/readme.txt",
+  "dependencies": {
+    "package.json": "^2.0.1",
+    "request": "^2.83.0"
+  }
+}

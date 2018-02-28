@@ -1,3 +1,5 @@
 .idea*
 *.java
 *.class
+*node_modules*
+Assignment-4/node_modules/*
