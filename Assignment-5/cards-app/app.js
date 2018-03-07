@@ -1,91 +1,132 @@
 const
+    // Custom module to query external api: deckofcards.com
     cards = require('deckofcards'),
-    inquirer = require('inquirer')
+    // Required to prompt/question user on cli elegantly.
+    inquirer = require('inquirer'),
+    // Required to add colors to output displayed on console, used for text color, background, and bold.
+    chalk = require('chalk')
 
+
+// Function for 'draw' command.
+// Accepts command options, draws 1 (defult, or specified) card(s) from the deck and prints on cli.
 const draw = (shuffle, n = 1) => {
-    return cards.deck(shuffle)
+    cards.deck(shuffle)
         .then(deck => cards.draw(deck.deck_id, n))
-        .catch(err => console.log(err))
+        .then(result => {
+            console.log('-- CARDS --')
+            result.cards.forEach(card => {
+                console.log(`${card.value} of ${card.suit}`)
+            })
+
+            console.log('-- REMAING CARDS --')
+            console.log(result.remaining)
+        })
+        .catch( (err) => console.log(`Error in draw Function:\n ${err}`) )
 }
 
-// HINT for #3 in Lab
-const discardPrompt = (decks) => {
-    // Prompt user to select cards using 'inquirer' module.
+
+// Function for 'play' command.
+// No options required for this command.
+const play = () => {
+    const   shuffle = true,
+            cardsToDraw = 5
+    
+    cards.deck(shuffle)
+        .then( (shuffledDeck) => cards.draw(shuffledDeck.deck_id, cardsToDraw) )
+        .then( (drawnCards) => discardPrompt(drawnCards) )
+        .then( (remainDeck) => {
+            const toDraw = 5 - remainDeck.cards.length
+            cards.draw( remainDeck.deck_id, toDraw)
+                .then( (newCards) => {
+                    for ( let card of newCards.cards ) {
+                        remainDeck.cards.push(card)
+                    }
+                    remainDeck.remaining = newCards.remaining
+                    return remainDeck
+                }).then( (finalDeck) => print(finalDeck) ) 
+        })
+        .catch( (err) => console.log(`Error in play Function:\n ${err}`) )
+}
+
+// Displays checklist of drawn cards, and validated user input.
+const discardPrompt = (drawnCards) => {
     return inquirer.prompt([{
         type: 'checkbox',
-        message: 'Select cards to throw away',
+        message: 'Select cards to throw away ( upto 4 cards )',
         name: 'cards',
         choices: () => {
-            // Generate arrays of drawn cards from the deck.
+            // Generate an array of drawn cards.
             const playingCards = [ new inquirer.Separator() ]
-            for ( let deck of decks.cards ) {
-                playingCards.push(`${deck.value} of ${deck.suit}`)
+            for ( let card of drawnCards.cards ) {
+                playingCards.push(`${card.value} of ${card.suit}`)
             }
             playingCards.push( new inquirer.Separator() )
             return playingCards
         },
-
         validate: (answers) => {
-            // Validate to check that atmost 4 cards are selected.
+            // Validation to check that atmost 4 cards are selected.
             if ( answers.length > 4 ) {
                 return "You must choose upto 4 cards."
             }
-            // if 0-4 cards are selected, return true.
+            // if 0-4 cards are selected, then return true.
             return true
         }
     }])
     .then( (answers) => {
-            // find and remove selected cards from drawn deck.
-            findAndRemove(decks, answers)
-        })
+        // Passing deck and user's answers to findAndRemove function.
+        // It returns the current deck with selected cards removed.
+        return findAndRemove(drawnCards, answers)
+    })
+    .catch( (err) => console.log(`Error in discardPrompt Function:\n ${err}`) )
 }
 
-// HINT for #4 in Lab
+// Removes the card(s) selected by user.
 const findAndRemove = (current, throwaway) => {
     // Finding cards from the drawn deck,
     // that matches user selected cards, and
-    // remove them.
+    // removes them.
     for ( let selectedCard of throwaway.cards ) {
-        const cardValue = selectedCard.split(" ")[0];
-        const cardSuit = selectedCard.split(" ")[2];
-
         const cardIndex = current.cards.findIndex( card => {
+            const cardValue = selectedCard.split(" ")[0];
+            const cardSuit = selectedCard.split(" ")[2];
             return (card.value===cardValue && card.suit===cardSuit)
         })
         current.cards.splice(cardIndex, 1)
     }
-
-    // Redraw that many cards from the same deck, from the remaining cards.
-    // Update the cards array and remaining cards.
-    cards.draw(current.deck_id, throwaway.cards.length)
-        .then( newCards => {
-            for ( let newCard of newCards.cards ) {
-                current.cards.push(newCard)
-            }
-            current.remaining -= newCards.cards.length
-            // call print function to display the final output.
-            print(current)
-        })
-    
+    // returns the current deck with selected cards removed.
+    return current
 }
 
-// HINT for #6 in Lab
+// Prints the current 5 cards in hand, with count of remaining cards in deck.
 const print = cards => {
-    console.log("--- CARDS ---")
-   for ( let card of cards.cards ) {
-        console.log(`${card.value} of ${card.suit}`)
+    // Object with suit name as key and suit icon code as value.
+    const suitIcons = {
+        "SPADES":"\u2660",
+        "DIAMONDS":"\u2666",
+        "CLUBS":"\u2663",
+        "HEARTS":"\u2665"
     }
-    console.log(`\n--- REMAINING CARDS ---\n${cards.remaining}`)
+
+    // Adding cyan bg to title.
+    console.log( chalk.black.bgCyan.bold("--- CARDS ---") )
+    for ( let card of cards.cards ) {
+        // Generating a string for card with suit icon, and also suit text for clarity.
+        const cardStr = `${card.value} of ${suitIcons[card.suit]} (${card.suit})`
+        // Displaying Hearts or Diamonds card in red color,
+        if ( card.suit == "HEARTS" || card.suit == "DIAMONDS" )
+            console.log(chalk.red.bgWhite.bold(cardStr))
+        else
+            // and Spades and Clubs card in black color.
+            console.log(chalk.black.bgWhite.bold(cardStr))
+    }
+    // Adding cyan bg to title.
+    console.log( chalk.black.bgCyan.bold("--- REMAINING CARDS ---") )
+    // Adding white bg to remaining count.
+    console.log( chalk.black.bgWhite.bold(cards.remaining) )
 }
 
-const play = () => {
-    // Draw 5 cards from a shuffled deck.
-    draw( true, 5)
-        // Prompt for cards to be thrown away.
-        .then( (deck) => discardPrompt(deck) )
-        .catch( (err) => console.log(err) )
-}
 
 module.exports = {
+    draw,
     play
 }

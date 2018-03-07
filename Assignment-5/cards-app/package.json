@@ -9,6 +9,7 @@
   "author": "Cydney Auman",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.3.2",
     "deckofcards": "file:../deckofcards",
     "inquirer": "^5.1.0",
     "yargs": "^11.0.0"
