@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Chuck Norris Facts</title>
+        
+        <!-- Bootstrap 4.0.0 min version CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Custom stylesheet -->
+        <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+        
+        <!-- Vue.js 2.5.16 CDN -->
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            
+            <!-- Header Section -->
+            <div class="jumbotron text-center headersection">
+                <h1 class="headerh1">Chuck a Norris fact, but be careful...</small></h1>
+            </div>
+
+            <!-- Chuck Norris jokes app -->
+            <div id="jokesChuckNorris">
+                <!-- Get a random fact from any or a specified category -->
+                <div class="jumbotron">
+                    <div class="row">
+                        <!-- left column for category dropdown -->
+                        <div class="col-3">
+                            <select class="form-control" v-model="categorySelected">
+                                <option value="" selected disabled hidden>Choose category</option>
+                                <option>All</option>
+                                <option v-for="category in categories">{{ category }}</option>
+                            </select>
+                            <br/><button class="btn btn-primary" v-on:click="getAJoke"> Get {{categorySelected}} joke</button>
+                        </div>
+                        <!-- displaying fetched joke on right, beause Chuck is always right... -->
+                        <div class="col-9">
+                            <!-- progress bar while fetching -->
+                            <div v-if="fetching" class="progress progress-bar progress-bar-striped active" role="progressbar">Fetching...</div>
+                            <blockquote v-else class="blockquote text-center">{{categoryJoke}}</blockquote>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Give a query, get the facts -->
+                <div class="jumbotron">
+                    <div class="row">
+                        <!-- history on the left -->
+                        <div class="col-3">
+                            <!-- category fetched history -->
+                            <div class="card">
+                                <div class="card-body" v-if="categoryHistory.length > 0">
+                                    Category fetched previously...
+                                    <ul><li v-for="history in categoryHistory" v-bind:value="history">{{history}}</li></ul>
+                                </div>
+                            </div>
+                            <!-- search queried history -->
+                            <div class="card">
+                                <div class="card-body" v-if="searchedHistory.length > 0">
+                                    Recently searched terms...
+                                    <ul><li v-for="history in searchedHistory" v-bind:value="history">{{history}}</li></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-9">
+                            <div class="row">
+                                <!-- search input form -->
+                                <input class="form-control" type="text" v-model="searchQuery" placeholder="Enter your search term..." />
+                                <button class="btn btn-primary" v-on:click="getSearchResults">Search</button>
+                            </div>
+                            <hr/>
+                            <!-- progress bar while querying -->
+                            <div v-if="querying" class="progress progress-bar progress-bar-striped active" role="progressbar">Querying...</div>
+                            <div class="row"  v-if="searchResult > 0">
+                                <p><strong>Displaying {{searchResult}} results from search...</strong></p>
+                                <ol><li v-for="joke in searchedJokes"  v-bind:value="joke"><p v-html="joke.value"></p></li></ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- app.js - Vue.js instance implementation -->
+            <script src="app.js"></script>
+        </div>
+    </body>
+
+</html>
