@@ -1,7 +1,8 @@
-.idea*
-.vscode*
-*.java
-*.class
-Assignment-*/node_modules/*
-Assignment-5/*/node_modules/*
-*package-lock.json
+# IDE (VSCode) files and directories:
+.DS_Store
+.idea/
+.vscode/
+
+# installed node-modules and package lock.
+Assignment-*/*/node_modules/
+Assignment-*/*/package-lock.json
