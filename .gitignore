@@ -6,3 +6,5 @@
 # installed node-modules and package lock.
 Assignment-*/*/node_modules/
 Assignment-*/*/package-lock.json
+Midterm/*/node_modules/
+Midterm/*/package-lock.json

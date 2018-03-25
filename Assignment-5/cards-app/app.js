@@ -13,13 +13,6 @@ const draw = (shuffle, n = 1) => {
     cards.deck(shuffle)
         .then(deck => cards.draw(deck.deck_id, n))
         .then(result => {
-            // console.log('-- CARDS --')
-            // result.cards.forEach(card => {
-            //     console.log(`${card.value} of ${card.suit}`)
-            // })
-
-            // console.log('-- REMAING CARDS --')
-            // console.log(result.remaining)
             print(result)
         })
         .catch( (err) => console.log(`Error in draw Function:\n ${err}`) )
