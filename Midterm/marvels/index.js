@@ -6,82 +6,74 @@ const
 
 // Uses get method to call api, and returns either body on success or error.
 const _fetch = (command) => {
-    return superagent.get(`${config.url}/${command}?ts=${config.timestamp}&apikey=${config.public_key}&hash=${config.auth_hash}`)
-        .then( (response) => response.body )
-        .catch( (error) => error.response.body )
-}
-
-// Uses get method to call api, and returns either body on success or error.
-const _fetchByName = (command) => {
-    console.log(`${config.url}/${command}&ts=${config.timestamp}&apikey=${config.public_key}&hash=${config.auth_hash}`)
     return superagent.get(`${config.url}/${command}&ts=${config.timestamp}&apikey=${config.public_key}&hash=${config.auth_hash}`)
         .then( (response) => response.body )
         .catch( (error) => error.response.body )
 }
 
 //Fetches lists of events.
-exports.events = () => {
-    return _fetch('events')
+exports.events = ( limit=20, offset=0) => {
+    return _fetch(`events?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventsByName = (eventName) => {
-    return _fetchByName(`events?name=${eventName}`)
+exports.getEventsByName = ( limit=20, offset=0, eventName) => {
+    return _fetch(`events?limit=${limit}&offset=${offset}&name=${eventName}`)
 }
 
-exports.getEventById = (id) => {
-    return _fetch(`events/${id}`)
+exports.getEventById = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventByIdCharacters = (id) => {
-    return _fetch(`events/${id}/characters`)
+exports.getEventByIdCharacters = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}/characters?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventByIdComics = (id) => {
-    return _fetch(`events/${id}/comics`)
+exports.getEventByIdComics = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}/comics?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventByIdCreators = (id) => {
-    return _fetch(`events/${id}/creators`)
+exports.getEventByIdCreators = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}/creators?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventByIdSeries = (id) => {
-    return _fetch(`events/${id}/series`)
+exports.getEventByIdSeries = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}/series?limit=${limit}&offset=${offset}`)
 }
 
-exports.getEventByIdStories = (id) => {
-    return _fetch(`events/${id}/stories`)
+exports.getEventByIdStories = ( limit=20, offset=0, id) => {
+    return _fetch(`events/${id}/stories?limit=${limit}&offset=${offset}`)
 }
 
 
 // Fetches lists of series.
-exports.series = () => {
-    return _fetch('series')
+exports.series = ( limit=20, offset=0) => {
+    return _fetch(`series?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByName = (serieName) => {
-    return _fetchByName(`series?name=${serieName}`)
+exports.getSeriesByName = ( limit=20, offset=0, serieName) => {
+    return _fetch(`series?limit=${limit}&offset=${offset}&name=${serieName}`)
 }
 
-exports.getSeriesById = (id) => {
-    return _fetch(`series/${id}`)
+exports.getSeriesById = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByIdCharacters = (id) => {
-    return _fetch(`series/${id}/characters`)
+exports.getSeriesByIdCharacters = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}/characters?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByIdComics = (id) => {
-    return _fetch(`series/${id}/comics`)
+exports.getSeriesByIdComics = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}/comics?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByIdCreators = (id) => {
-    return _fetch(`series/${id}/creators`)
+exports.getSeriesByIdCreators = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}/creators?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByIdEvents = (id) => {
-    return _fetch(`series/${id}/events`)
+exports.getSeriesByIdEvents = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}/events?limit=${limit}&offset=${offset}`)
 }
 
-exports.getSeriesByIdStories = (id) => {
-    return _fetch(`series/${id}/stories`)
+exports.getSeriesByIdStories = ( limit=20, offset=0, id) => {
+    return _fetch(`series/${id}/stories?limit=${limit}&offset=${offset}`)
 }

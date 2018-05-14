@@ -16,6 +16,16 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         desc: 'Fetches lists of events.',
         builder: (yargs) => {
             return yargs
+                .option('limit', {
+                    alias: 'l',
+                    describe: 'Fetches a maximum of this number of results for specified resource.',
+                    default: 20
+                })
+                .option('offset', {
+                    alias: 'o',
+                    describe: 'Fetches results starting from this index for specified resource.',
+                    default: 0
+                })
                 .option('name', {
                     alias: 'n',
                     describe: 'Fetches a single event resource with specified name.',
@@ -69,6 +79,16 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         desc: 'Fetches lists of series.',
         builder: (yargs) => {
             return yargs
+                .option('limit', {
+                    alias: 'l',
+                    describe: 'Fetches a maximum of this number of results for specified resource.',
+                    default: 20
+                })
+                .option('offset', {
+                    alias: 'o',
+                    describe: 'Fetches results starting from this index for specified resource.',
+                    default: 0
+                })
                 .option('name', {
                     alias: 'n',
                     describe: 'Fetches a single series resource with specified name.',

@@ -103,10 +103,12 @@ const
     
 module.exports.run = options => {
     if ( options.id == null && options.name == null ) {
-        console.log("In if - both null.")
-        marvels.events()
+        marvels.events( options.limit, options.offset)
                 .then( (resources) => {
                     console.log()
+                    if ( resources.code == 404 ) {
+                        console.log("Sorry, no Events are available...")
+                    } else {}
                     resources.data.results.forEach( (items) => {
                         console.log(`Event ID: ${items.id}`);
                         console.log(`Event Name: ${items.title}`)
