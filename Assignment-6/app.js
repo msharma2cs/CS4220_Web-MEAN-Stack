@@ -55,7 +55,7 @@ let viewModelChuckNorris = new Vue({
             }
             // api url based on selected category
             if(viewModel.categorySelected !== 'All') {
-                getUrl += '?categories=' + viewModel.categorySelected;
+                getUrl += '?category=' + viewModel.categorySelected;
             }
             
             // adding unique category select to history.
